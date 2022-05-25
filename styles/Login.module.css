@@ -1,0 +1,40 @@
+.card {
+  max-width: 70%;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+.welcome_back {
+  font-size: 28px;
+  color: #222647;
+  font-weight: 700;
+}
+
+.cta {
+  text-align: center;
+  letter-spacing: .02em;
+  margin-bottom: 35px;
+  color: #4b4d4d;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input {
+  margin-bottom: 20px;
+}
+
+#login_btn {
+  margin-top: 10px;
+  background-color: #4a52ff;
+}
