@@ -1,0 +1,58 @@
+.section_container {
+  padding: 20px 40px;
+}
+
+h1.section_title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222647;
+}
+
+.groups_count, .section_description {
+  color: #71706E;
+}
+
+div.card {
+  border-radius: 12px;
+}
+
+.card .top_section {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px 20px;
+}
+
+.card .top_section .input {
+  max-width: 50%;
+  flex: 1 1;
+}
+
+button.add_group_btn {
+  border-color: #4a52ff;
+  color: #4a52ff;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.card .main_section {
+  padding: 20px 10px;
+}
+
+.card .navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px 0;
+}
+
+.card .navigation button {
+  text-transform: capitalize;
+}
+
+.card .navigation button.active {
+  color: #4a52ff;
+}
+
+.card .navigation button.passive {
+  color: #737485;
+}
