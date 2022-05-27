@@ -1,79 +1,29 @@
 import { Card, CardContent, Button, Typography, TextField, Divider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Group, { GroupType } from '../../components/Group';
 import styles from '../../styles/Groups.module.css';
 import { groupActions } from '../../redux/slices/group-slice';
 import { RootState } from '../../redux/store';
 import { listGroups } from '../../services/listgroups';
 import Loader from '../../components/Loader';
-import { useAuth } from '../../hooks/useAuth';
+import useTabledList from '../../hooks/useTabledList';
 
 export default function Groups() {
-  const authenticate = useAuth();
   const dispatch = useDispatch();
   const groups = useSelector((state: RootState) => state.groups);
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [pageIndex, setPageIndex] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false)
-  const [collectionRange, setCollectionRange] = useState<string>('');
-  const totalGroups = +collectionRange.slice(collectionRange.indexOf('/') + 1);
-  
-  const totalPages = () => {
-    const startIndex = collectionRange.indexOf('-') + 1;
-    const endIndex = collectionRange.indexOf('/');
-    const subStr = +collectionRange.slice(startIndex, endIndex);
-    const fullPages = Math.floor(totalGroups/(subStr + 1));
-    const extra = totalGroups%(subStr + 1) ? 1 : 0;
-    return fullPages + extra;
-  }
-
-  const fetchGroups = async (offset: number, setRange: boolean) => {
-    try {
-      const response = await listGroups(offset);
-      const groups = await response.json();
-      if (!response.ok) {
-        setError(true);
-      } else {
-        dispatch(groupActions.setGroups(groups));
-        setLoading(false);
-        if (setRange) {
-          const headers = Object.fromEntries([...(response.headers as any)]);
-          setCollectionRange(headers['x-collection-range']);
-        }
-      }
-    } catch(error) {
-      setError(true);
-    }
-  }
+  const req = (offset: number) => listGroups(offset);
+  const execute = (list: GroupType[]) => dispatch(groupActions.setGroups(list));
+  const { searchQuery, fetchList, pageIndex, loading, error, totalListLength, handleChange, handleNavigation, totalPages } = useTabledList(req, execute)
 
   useEffect(() => {
-    fetchGroups(0, true);
+    fetchList(0, true);
   }, [])
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  }
-
-  const handleNavigation = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
-    const target = e.currentTarget.name;
-    
-    if (target === 'prev') {
-      fetchGroups((pageIndex - 2) * 10, false);
-      setPageIndex(prevIndex => prevIndex - 1);
-    }
-    else if (target === 'next') {
-      fetchGroups(pageIndex * 10, false);
-      setPageIndex(prevIndex => prevIndex + 1);
-    }
-  }
 
   return (
     <Typography component='div' className={styles.section_container}>
       <Typography component='div' sx={{marginBottom: 3}}>
-        <Typography component='h1' className={styles.section_title}>Groups <span className={styles.groups_count}>{totalGroups}</span></Typography>
+        <Typography component='h1' className={styles.section_title}>Groups <span className={styles.groups_count}>{totalListLength}</span></Typography>
         <Typography component='p' className={styles.section_description}>Add users to groups and assign different access rights</Typography>
       </Typography>
 

@@ -10,78 +10,29 @@ import { useRouter } from 'next/router';
 import AddDoor from '../../../components/AddDoor';
 import Loader from '../../../components/Loader';
 import { useAuth } from '../../../hooks/useAuth';
+import useTabledList from '../../../hooks/useTabledList';
 
 export default function Doors() {
-  const authenticate = useAuth();
   const dispatch = useDispatch();
-  const doors = useSelector((state: RootState) => state.doors);
   const router = useRouter();
   const group_id = router.query.id;
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [pageIndex, setPageIndex] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false)
-  const [collectionRange, setCollectionRange] = useState<string>('');
-  const totalDoors = +collectionRange.slice(collectionRange.indexOf('/') + 1);
-  const [open, setOpen] = useState<boolean>(false);
-
-  const totalPages = () => {
-    const startIndex = collectionRange.indexOf('-') + 1;
-    const endIndex = collectionRange.indexOf('/');
-    const subStr = +collectionRange.slice(startIndex, endIndex);
-    const fullPages = Math.floor(totalDoors/(subStr + 1));
-    const remainder = totalDoors%(subStr + 1) ? 1 : 0;
-    return fullPages + remainder;
-  }
-
-  const fetchDoors = async (offset: number, setRange: boolean) => {
-    try {
-      const response = await listDoors(offset, group_id as string)
-      const doors = await response.json();
-      if (!response.ok) {
-        setError(true);
-      } else {
-        dispatch(doorActions.setDoors(doors));
-        setLoading(false);
-        if (setRange) {
-          const headers = Object.fromEntries([...(response.headers as any)]);
-          setCollectionRange(headers['x-collection-range']);
-        }
-      }
-    } catch(error) {
-      setError(true);
-    }
-  }
+  const doors = useSelector((state: RootState) => state.doors);
+  const req = (offset: number) => listDoors(offset, group_id as string);
+  const execute = (list: DoorType[]) => dispatch(doorActions.setDoors(list));
+  const { searchQuery, fetchList, pageIndex, loading, error, totalListLength, handleChange, handleNavigation, totalPages } = useTabledList(req, execute)
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   useEffect(() => {
     if (!group_id) return;
-    fetchDoors(0, true);
+    fetchList(0, true);
   }, [group_id])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  }
-
-  const handleNavigation = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
-    const target = e.currentTarget.name;
-    
-    if (target === 'prev') {
-      fetchDoors((pageIndex - 2) * 10, false);
-      setPageIndex(prevIndex => prevIndex - 1);
-    }
-    else if (target === 'next') {
-      fetchDoors(pageIndex * 10, false);
-      setPageIndex(prevIndex => prevIndex + 1);
-    }
-  }
-
   const handleOpen = () => {
-    setOpen(true);
+    setOpenDialog(true);
   }
   
   const handleClose = () => {
-    setOpen(false);
+    setOpenDialog(false);
   }
 
   return (
@@ -109,7 +60,6 @@ export default function Doors() {
                     placeholder="Search Locks..." variant="outlined" size='small' required
                     onChange={handleChange}  
                   />
-                  <AddDoor open={open} handleClose={handleClose} group_id={group_id as string} />
                   <Button type='button' variant='outlined'
                     className={styles.add_group_btn}
                     onClick={handleOpen}
@@ -146,6 +96,8 @@ export default function Doors() {
           }
         </CardContent>
       </Card>
+
+      <AddDoor open={openDialog} handleClose={handleClose} group_id={group_id as string} />
       <Loader open={loading} />
     </Typography>
   )
