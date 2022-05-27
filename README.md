@@ -1,8 +1,8 @@
-This is a sample page built with React([Next.js](https://nextjs.org/)), Redux, Typescript, Material UI, and the KISI REST API.
+This is a sample app built with React ([Next.js](https://nextjs.org/)), Redux, Typescript, Material UI, and the Kisi REST API.
 
 ## Getting Started
 
-This site can be accessed remotely via https://kisi-assessment.vercel.app/
+This project is available publicly at https://kisi-assessment.vercel.app/
 
 If you would like to run it on your local machine, you can follow the guide below.
 
@@ -29,7 +29,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 * Redux
 * Typescript
 * Material UI
-* KISI REST API
+* Kisi REST API
 
 ## Learn More
 
