@@ -39,13 +39,16 @@ export default function Door({door}: DoorProps) {
   const [snackbar, setSnackbar] = useState<SnackbarState>({open: false, type: 'success', message: ''});
   const { open, anchorEl, message, openPopover, closePopover } = usePopover();
 
+  // Delete or deassign lock
   const deAssignLock = async () => {
     try {
       const response = await deleteGroupLock(door.id);
       if (response.ok) {
         setLoading(false);
+        // Notify user when the operation is complete
         setSnackbar({open: true, type: 'success', message: "Lock has been deleted from this group!"});
         const newDoors = doors.filter((item: DoorType) => item.id !== door.id);
+        // Update the redux store after 0.5s, so that the store update does not interfere with the snackbar notification
         setTimeout(() => dispatch(doorActions.setDoors(newDoors)), 500)
       }
     } catch (error) {

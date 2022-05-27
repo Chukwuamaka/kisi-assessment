@@ -1,3 +1,5 @@
+// Form dialog for adding a door(lock) to a group
+
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -78,19 +80,29 @@ const fetcher = async (...args: string[]) => {
 }
 
 export default function AddDoor({ open, handleClose, group_id }: AddDoorProps) {
+  // Retrieve the list of places and populate the Select Place select element
   const { data: places } = useSWR('https://api.kisi.io/places', fetcher);
   const [place, setPlace] = useState<number | string>('');
   const [doors, setDoors] = useState<Door[]>([]);
   const [door, setDoor] = useState<number | string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [snackbar, setSnackbar] = useState<SnackbarState>({open: false, type: 'success', message: 'info'});
+  const [snackbar, setSnackbar] = useState<SnackbarState>({open: false, type: 'info', message: ''});
   const router = useRouter()
   const classes = useStyles();
 
+  // Retrieve the locks belonging to the place selected by the user from the list
   const getLocks = async (place_id: number) => {
-    const response = await getPlaceLocks(place_id);
-    const doors = await response.json();
-    setDoors(doors);
+    try {
+      const response = await getPlaceLocks(place_id);
+      if (!response.ok) {
+        setSnackbar({open: true, type: 'error', message: 'Something went wrong. Please refresh the page'});
+        return;
+      }
+      const doors = await response.json();
+      setDoors(doors);
+    } catch (error) {
+      setSnackbar({open: true, type: 'error', message: 'Oops! An error ocurred. Please check your internet and try again'})
+    }
   }
 
   const handleChange = (event: SelectChangeEvent<string | number>) => {
@@ -113,6 +125,7 @@ export default function AddDoor({ open, handleClose, group_id }: AddDoorProps) {
     handleClose();
   }
 
+  // Assign lock to the group or return an error if the lock has already been assigned to the group
   const assignLock = async () => {
     try {
       setLoading(true);
@@ -122,6 +135,7 @@ export default function AddDoor({ open, handleClose, group_id }: AddDoorProps) {
         resetFields();
         setLoading(false);
         setSnackbar({open: true, type: 'success', message: "Lock has been added successfully!"});
+        // Reload the page so that the user can see the updated list of doors (locks)
         router.reload();
       }
       else {

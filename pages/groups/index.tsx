@@ -16,6 +16,9 @@ export default function Groups() {
   const execute = (list: GroupType[]) => dispatch(groupActions.setGroups(list));
   const { searchQuery, fetchList, pageIndex, loading, error, totalListLength, handleChange, handleNavigation, totalPages } = useTabledList(req, execute)
 
+  // Fetch the list of doors belonging to a group only when the group id is accessible from the url path.
+  // The setRange parameter of the fetchList function is assigned to true because we want to retrieve the
+  // 'X-Collection-Range' response header (once) on render of the first page of the list.
   useEffect(() => {
     fetchList(0, true);
   }, [])

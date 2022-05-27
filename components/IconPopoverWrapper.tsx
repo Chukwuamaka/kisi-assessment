@@ -1,3 +1,5 @@
+// Wrapper for the popover feature of the icons
+
 import Typography from '@mui/material/Typography';
 
 type IconPopoverWrapperProps = {

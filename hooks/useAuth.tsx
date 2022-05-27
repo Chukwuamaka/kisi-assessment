@@ -1,3 +1,5 @@
+// Custom hook to ensure that user is authenticated when visiting a private route
+
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 

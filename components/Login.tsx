@@ -34,6 +34,7 @@ export default function Login() {
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Save login details provided by the user in the redux store
     dispatch(authActions.setLoginDetails({
       [e.target.name]: e.target.value
     }));

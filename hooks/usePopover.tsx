@@ -9,6 +9,7 @@ type CustomPopoverProps = {
   closePopover: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void;
 }
 
+// Popover component from MUI
 export default function CustomPopover({ open, anchorEl, message, closePopover }: CustomPopoverProps) {
   return (
     <Popover
@@ -27,6 +28,8 @@ export default function CustomPopover({ open, anchorEl, message, closePopover }:
     </Popover>
   );
 }
+
+// Custom hook to handle shared popover logic between components
 
 export function usePopover() {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);

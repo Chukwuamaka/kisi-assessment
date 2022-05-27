@@ -9,7 +9,6 @@ import styles from '../../../styles/Groups.module.css';
 import { useRouter } from 'next/router';
 import AddDoor from '../../../components/AddDoor';
 import Loader from '../../../components/Loader';
-import { useAuth } from '../../../hooks/useAuth';
 import useTabledList from '../../../hooks/useTabledList';
 
 export default function Doors() {
@@ -22,6 +21,9 @@ export default function Doors() {
   const { searchQuery, fetchList, pageIndex, loading, error, totalListLength, handleChange, handleNavigation, totalPages } = useTabledList(req, execute)
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
+  // Fetch the list of doors belonging to a group only when the group id is accessible from the url path.
+  // The setRange parameter of the fetchList function is assigned to true because we want to retrieve the
+  // 'X-Collection-Range' response header (once) on render of the first page of the list.
   useEffect(() => {
     if (!group_id) return;
     fetchList(0, true);
@@ -97,6 +99,7 @@ export default function Doors() {
         </CardContent>
       </Card>
 
+      {/* Dialog component for the Add Door form and a loader (for loading states) */}
       <AddDoor open={openDialog} handleClose={handleClose} group_id={group_id as string} />
       <Loader open={loading} />
     </Typography>
