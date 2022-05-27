@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { doorActions } from '../redux/slices/door-slice';
 import { RootState } from '../redux/store';
 import CustomPopover, { usePopover } from '../hooks/usePopover';
-import IconPopover from './IconPopover';
+import IconPopoverWrapper from './IconPopoverWrapper';
 
 export type DoorType = {
   id: number;
@@ -73,15 +73,15 @@ export default function Door({door}: DoorProps) {
       </Typography>
       
       <Typography component='div' className={styles.icons_container}>
-        <IconPopover open={open} message='Geofence restriction' closePopover={closePopover} openPopover={openPopover}>
+        <IconPopoverWrapper open={open} message='Geofence restriction' closePopover={closePopover} openPopover={openPopover}>
           <LocationOnOutlinedIcon className={styles.icons} />
-        </IconPopover>
-        <IconPopover open={open} message='Reader restriction' closePopover={closePopover} openPopover={openPopover}>
+        </IconPopoverWrapper>
+        <IconPopoverWrapper open={open} message='Reader restriction' closePopover={closePopover} openPopover={openPopover}>
           <AdUnitsOutlinedIcon className={styles.icons} />
-        </IconPopover>
-        <IconPopover open={open} message='Unassign door from group' closePopover={closePopover} openPopover={openPopover}>
+        </IconPopoverWrapper>
+        <IconPopoverWrapper open={open} message='Unassign door from group' closePopover={closePopover} openPopover={openPopover}>
           <DeleteIcon className={styles.icons} onClick={deAssignLock} />
-        </IconPopover>
+        </IconPopoverWrapper>
         <CustomPopover open={open} anchorEl={anchorEl} message={message} closePopover={closePopover} />
       </Typography>
 

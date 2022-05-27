@@ -8,7 +8,7 @@ import PhonelinkLockOutlinedIcon from '@mui/icons-material/PhonelinkLockOutlined
 import AdUnitsOutlinedIcon from '@mui/icons-material/AdUnitsOutlined';
 import styles from '../styles/Group.module.css';
 import Link from 'next/link';
-import IconPopover from './IconPopover';
+import IconPopoverWrapper from './IconPopoverWrapper';
 import CustomPopover, { usePopover } from '../hooks/usePopover';
 
 export type GroupType = {
@@ -39,32 +39,32 @@ export default function Group({group}: GroupProps) {
 
         <Typography component='div'>
           <Typography component='p' className='d-inline-block' sx={{marginRight: 1}}>
-            <IconPopover open={open} message='Doors' closePopover={closePopover} openPopover={openPopover}>
+            <IconPopoverWrapper open={open} message='Doors' closePopover={closePopover} openPopover={openPopover}>
               <SensorDoorOutlinedIcon className={styles.icons} />
-            </IconPopover>
+            </IconPopoverWrapper>
             <Typography component='span'>{group.locks_count}</Typography>
           </Typography>
           <Typography component='p' className='d-inline-block'>
-            <IconPopover open={open} message='Users' closePopover={closePopover} openPopover={openPopover}>
+            <IconPopoverWrapper open={open} message='Users' closePopover={closePopover} openPopover={openPopover}>
               <PeopleOutlineIcon className={styles.icons} />
-            </IconPopover>
+            </IconPopoverWrapper>
             <Typography component='span'>{group.members_count}</Typography>
           </Typography>
         </Typography>
         
         <Typography component='div'>
-          <IconPopover open={open} message='Time restriction' closePopover={closePopover} openPopover={openPopover}>
+          <IconPopoverWrapper open={open} message='Time restriction' closePopover={closePopover} openPopover={openPopover}>
             <AccessTimeOutlinedIcon className={styles.icons} />
-          </IconPopover>
-          <IconPopover open={open} message='Geofence restriction' closePopover={closePopover} openPopover={openPopover}>
+          </IconPopoverWrapper>
+          <IconPopoverWrapper open={open} message='Geofence restriction' closePopover={closePopover} openPopover={openPopover}>
             <LocationOnOutlinedIcon className={styles.icons} />
-          </IconPopover>
-          <IconPopover open={open} message='Primary device restriction' closePopover={closePopover} openPopover={openPopover}>
+          </IconPopoverWrapper>
+          <IconPopoverWrapper open={open} message='Primary device restriction' closePopover={closePopover} openPopover={openPopover}>
             <PhonelinkLockOutlinedIcon className={styles.icons} />
-          </IconPopover>
-          <IconPopover open={open} message='Reader restriction' closePopover={closePopover} openPopover={openPopover}>
+          </IconPopoverWrapper>
+          <IconPopoverWrapper open={open} message='Reader restriction' closePopover={closePopover} openPopover={openPopover}>
             <AdUnitsOutlinedIcon className={styles.icons} />
-          </IconPopover>
+          </IconPopoverWrapper>
         </Typography>
         
         <CustomPopover open={open} anchorEl={anchorEl} message={message} closePopover={closePopover} />
