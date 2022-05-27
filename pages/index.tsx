@@ -1,9 +1,11 @@
 import Login from '../components/Login';
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useAuth } from '../hooks/useAuth';
 
 export default function Home() {
+  const authenticate = useAuth();
+
   return (
     <div className={styles.container}>
       <Head>
