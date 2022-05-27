@@ -17,7 +17,7 @@ span.welcome_back {
   font-weight: 700;
 }
 
-.cta {
+p.cta {
   text-align: center;
   letter-spacing: .02em;
   margin-bottom: 35px;
