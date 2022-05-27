@@ -14,7 +14,7 @@ span.lock_description, span.place_description {
   font-size: 0.875rem;
 }
 
-.icons_container > * {
+div.icons_container > span {
   margin-right: 20px;
 }
 
