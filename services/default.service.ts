@@ -16,3 +16,24 @@ export const postRequest = (url: string, data: object) => {
     body: JSON.stringify(data)
   });
 };
+
+export const putRequest = (url: string, data: object) => {
+  return fetch(url, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `KISI-LOGIN ${process.env.NEXT_PUBLIC_API_KEY}`
+    },
+    body: JSON.stringify(data)
+  });
+};
+
+export const deleteRequest = (url: string) => {
+  return fetch(url, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `KISI-LOGIN ${process.env.NEXT_PUBLIC_API_KEY}`
+    },
+  });
+};
