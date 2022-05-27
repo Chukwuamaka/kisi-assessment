@@ -44,12 +44,6 @@ export function usePopover() {
   const open = Boolean(anchorEl);
 
   return (
-    {
-      open,
-      anchorEl,
-      message,
-      openPopover,
-      closePopover,
-    }
+    { open, anchorEl, message, openPopover, closePopover }
   )
 }
