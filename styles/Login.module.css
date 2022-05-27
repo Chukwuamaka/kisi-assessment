@@ -1,17 +1,17 @@
-.card {
+div.card {
   max-width: 70%;
   padding: 30px;
   border-radius: 12px;
 }
 
-.heading {
+div.heading {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 8px;
 }
 
-.welcome_back {
+span.welcome_back {
   font-size: 28px;
   color: #222647;
   font-weight: 700;
@@ -30,7 +30,7 @@
   justify-content: center;
 }
 
-.input {
+div.input {
   margin-bottom: 20px;
 }
 
