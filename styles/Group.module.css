@@ -1,0 +1,25 @@
+.group_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  cursor: pointer;
+}
+
+.group_container > div:first-child {
+  flex-basis: 50%;
+}
+
+.group_container:hover {
+  background-color: #F5F4F3;
+}
+
+.icons {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+p.group_description {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.875rem;
+}
